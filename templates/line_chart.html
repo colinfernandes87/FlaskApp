@@ -1,0 +1,123 @@
+<html>
+<head>
+    <style>
+        body {
+          background: black;
+          color: white;
+          font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          }
+          
+          /* HEADER */
+          
+          header {
+          background-color: black;
+          /*  sorry for the LONG urls, I had to upload them to google drive  */
+          background-size: 100%;
+          background-position: center;
+          height: 40px;
+          padding: 20px;
+          text-align: center;
+          }
+            
+          /* FEATURES */
+          
+          .display {
+          background: beige;
+          text-align: center;
+          color: gray;
+          display: flex;
+          flex-direction: row;
+          margin: 0;
+          padding: 0;
+          }
+          
+          .chart {
+          width: 60%;
+          margin: auto;
+          text-align: center;
+          text-transform: uppercase;
+          color: black;
+          font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+          }
+          
+          .forecast {
+          width: 30%;
+          margin: auto;
+          text-align: left;
+          text-transform: uppercase;
+          color: black;
+          font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+          
+          }
+
+          .tbl {
+          text-align: center;
+          border-collapse: collapse;
+          text-transform: uppercase;
+          color: black;
+          font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+          }
+          
+          /* FOOTER */
+          
+          footer {
+          background: black;
+          color: gray;
+          font-size: 12px;
+          padding: 20px 20px;
+          text-align: center;
+          }
+        </style>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">    
+  google.charts.load('current', {packages: ['corechart', 'line']});
+  google.charts.setOnLoadCallback(drawTrendlines);
+
+  function drawTrendlines() {
+        var data = google.visualization.arrayToDataTable({{ data|safe }});
+
+  var options = {
+    animation: {
+            startup: true,   /* Need to add this for animations */
+            duration: 1000,
+            easing: 'out'
+          },
+      backgroundColor: 'beige',
+        'title' : 'Current Stock Price',
+                hAxis: {
+                    title: 'Date',
+                    baseline: 0,
+                    baselineColor: 'black'
+                },
+                vAxis: {
+                    title: 'Price',
+                    baseline: 0,
+                    baselineColor: 'black'
+                },
+            colors: ['black', 'blue', 'red', 'green', 'yellow', 'gray']
+          };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+
+      };
+  </script>
+
+</head>
+<body>
+  <header>30 Days Closing Data</header>
+  <section class="display">
+      <div id="chart_div" style=" height: 500px; width: 60%"></div>
+      <div class="forecast" >
+        <h2>Next Day Forecast </h2>
+              {{pred|safe}}
+      </div>
+    </section>
+  <footer>
+      
+  </footer>
+</body>
+</html>
